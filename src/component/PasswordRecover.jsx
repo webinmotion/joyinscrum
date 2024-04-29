@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import FindReplaceIcon from '@mui/icons-material/FindReplace';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { supabase } from '../service/auth';
@@ -43,7 +43,7 @@ export default function PasswordRecover() {
                 }}
             >
                 <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                    <LockOutlinedIcon />
+                    <FindReplaceIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
                     Recover Password
