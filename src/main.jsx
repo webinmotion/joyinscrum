@@ -1,27 +1,39 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import CssBaseline from '@mui/material/CssBaseline';
 import Layout from './component/Layout.jsx';
 import './index.scss';
 import App from './App.jsx';
 import { AppContextProvider } from './store/index.jsx';
 import { BrowserRouter } from "react-router-dom";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {
+  createTheme,
+  // ThemeProvider
+} from '@mui/material/styles';
+import { ThemeProvider } from '@emotion/react';
 
-const theme = createTheme({
+const darkTheme = createTheme({
   palette: {
-    mode: 'light',
+    mode: 'dark',
     primary: {
-      main: '#551a8b',
+      light: '#757ce8',
+      main: '#3f50b5',
+      dark: '#002884',
+      contrastText: '#fff',
     },
     secondary: {
-      main: '#f57f17',
+      light: '#ff7961',
+      main: '#f44336',
+      dark: '#ba000d',
+      contrastText: '#000',
     },
   },
 });
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
       <AppContextProvider>
         <BrowserRouter>
           <Layout>
@@ -29,6 +41,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           </Layout>
         </BrowserRouter>
       </AppContextProvider>
-    </ThemeProvider>
+    </ThemeProvider >
   </React.StrictMode>,
 )
