@@ -32,15 +32,15 @@ const darkTheme = createTheme({
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <AppContextProvider>
+    <AppContextProvider>
+      <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
         <BrowserRouter>
           <Layout>
             <App />
           </Layout>
         </BrowserRouter>
-      </AppContextProvider>
-    </ThemeProvider >
+      </ThemeProvider >
+    </AppContextProvider>
   </React.StrictMode>,
 )
