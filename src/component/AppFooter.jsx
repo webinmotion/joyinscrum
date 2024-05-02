@@ -43,6 +43,8 @@ export default function AppFooter() {
                     <Link aria-label={"follow in twitter"} title={"follow in twitter"} sx={{ fontSize: 14, textDecoration: 'none' }} target="_blank" href={"https://twitter.com/intent/tweet"} className="twitter-share-button"><TwitterIcon /></Link>
                     <Link aria-label={"join discord community"} title={"join discord community"} sx={{ fontSize: 14, textDecoration: 'none' }} target="_blank" href="https://discord.gg/wYCHkppk"><img src="img/icons-discord.png" alt='discord' /></Link>
                     <Link aria-label={"about the developer"} title={"about the developer"} sx={{ fontSize: 14, textDecoration: 'none' }} target="_blank" href={"https://www.linkedin.com/in/stephen-maina-linked-in"}><LinkedInIcon /></Link>
+                    <a href="http://localhost:5173/privacypolicy.html" target="_blank" style={{fontSize: '10px', textDecoration: 'none', opacity: 0.5, cursor: 'help'}}>privacy policy</a>
+                    <a href="http://localhost:5173/termsofservice.html" target="_blank" style={{fontSize: '10px', textDecoration: 'none', opacity: 0.5, cursor: 'help'}}>terms of service</a>
                 </Box>
             </Container>
         </Box>

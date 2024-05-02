@@ -3,7 +3,7 @@ import Paper from '@mui/material/Paper';
 import { useEffect, useState } from 'react';
 import Markdown  from 'react-markdown';
 import remarkGfm from 'remark-gfm'
-import './dashboard.scss'
+import '../markdown/dashboard.scss'
 
 export default function Dashboard() {
 

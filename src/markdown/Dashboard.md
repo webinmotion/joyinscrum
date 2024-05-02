@@ -67,6 +67,21 @@ Based on the mode you are in, you will see different menu options
 
 ![Submit Vote](./img/select_best_option.png)
 
+## Mobile phone users
+
+A mobile app option will soon be avaiable for Android devices in Google play store. The name to search will be __joyinscrum-client__. This app provides a convenient way to join the __scrum estimation ceremony__ without needing to have a browser open in a desktop/laptop computer. In the mobile device however, you can only be a __participant__ and not an __organizer__. Functionality that is reserved for an organizer is currently not available in the mobile app.
+
+### Home Screen
+
+|   Screen                                              |       Notes                                                       |
+|-------------------------------------------------------|-------------------------------------------------------------------|
+|   ![home-screen](./img/mobile/home-screen.jpg)        |   This is also the landing page. It is the first screen that a mobile user will encounter when using the client app
+|   ![guest-screen](./img/mobile/guest-screen.jpg)      |   Upon pressing the __Scan QR Code__ button in the __Home Page__, and scanning the organizer's QR Code, this screen allows a participant who is not signed in to provide a custom user handle (must be unique). If the participant is signed in, this screen is skipped and the user's email address is used as the handle (the value is already unique)
+|   ![account-screen](./img/mobile/account-screen.jpg)  |   Upon pressing the __My Profile__ button in the __Home Page__, this scren provides the participant to either register a new account or sign in using their existing account. This is convenient for skipping the __Guest Page__ when a unique user handle is required before joining an ongoing scrum
+|   ![profile-screen](./img/mobile/profile-screen.jpg)  |   This screen allows a user to optionally __enrich their profile__ by adding attributes like first name, last name, phone number and the country they are located. This page also provides a __sign out__ button for the participant. __Purging__ an existing account can not be done from a mobile device
+|   ![scrum-screen](./img/mobile/scrum-screen.jpg)      |   This screen allows a user to __respond to the current scrum topic__ by selecting a a choice from the dropdown menu   
+
+
 ## Conclusion
 
-Feel free to leave any feedback or suggestions through the channels provided. Your input will be used to make the experience more pleasant. __Happy Scrumming__ 
+Feel free to leave any feedback or suggestions through the channels provided. Your input will be used to improve your experience with the app. __Happy Scrumming__ 
