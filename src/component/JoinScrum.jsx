@@ -11,13 +11,16 @@ import IconButton from '@mui/material/IconButton';
 import ArrowCircleRight from '@mui/icons-material/ArrowCircleRight';
 import { Typography } from '@mui/material';
 import { useAppContext } from '../store';
+import { Navigate } from 'react-router-dom';
 
 const LINK_HREF_REGEX = /https?:\/\/(.+)/;
+const ROUTE_REGEX = /\/scrum?\/(.+)?\/player\/(.+)/;
 
 export default function JoinScrum() {
 
     const [scrumUrl, setScrumUrl] = useState({ value: '', error: false, message: '' });
     const [userHandle, setUserHandle] = useState({ value: '', error: false, message: '' });
+    const [route, setRoute] = useState(null)
     const { showAlert } = useAppContext();
 
     function handleInvitation() {
@@ -38,11 +41,14 @@ export default function JoinScrum() {
             showAlert({ message: scrumUrl.message, severity: "error", autoClose: true })
         }
         else {
-            location.href = `${scrumUrl.value?.trim()}/player/${btoa(userHandle.value?.trim())}`;
+            let pathInfo = scrumUrl.value.replace(location.origin, "");
+            setRoute(`${pathInfo?.trim()}/player/${btoa(userHandle.value?.trim())}`);
         }
     }
 
-    return (
+    return ROUTE_REGEX.test(route) ?
+        <Navigate to={route} replace />
+        :
         <Container component="main" maxWidth="md">
             <Box
                 component="form"
@@ -93,5 +99,7 @@ export default function JoinScrum() {
                 <Typography variant='h4' sx={{ mt: 4 }}>{scrumUrl.value}/player/{userHandle.value}</Typography>
             </Box>
         </Container>
-    )
+
+
+
 }
