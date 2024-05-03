@@ -12,7 +12,7 @@ export default function Status404() {
         },
       }}
     >
-      <Paper elevation={0}>
+      <Paper sx={{p: 3}} elevation={0}>
         <h2>404: Page Not Found</h2>
         <p>Resource requested could not be found</p>
       </Paper>

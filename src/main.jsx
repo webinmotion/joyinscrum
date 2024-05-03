@@ -8,24 +8,24 @@ import { AppContextProvider } from './store/index.jsx';
 import { BrowserRouter } from "react-router-dom";
 import {
   createTheme,
-  // ThemeProvider
 } from '@mui/material/styles';
 import { ThemeProvider } from '@emotion/react';
 
 const darkTheme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: 'light',
     primary: {
-      light: '#757ce8',
-      main: '#3f50b5',
-      dark: '#002884',
-      contrastText: '#fff',
+      main: '#551a8b',
     },
     secondary: {
-      light: '#ff7961',
-      main: '#f44336',
-      dark: '#ba000d',
-      contrastText: '#000',
+      main: '#f5780b',
+    },
+    background: {
+      default: '#e4e4e4',
+      paper: '#f4f7f7',
+    },
+    warning: {
+      main: '#006064',
     },
   },
 });

@@ -28,7 +28,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { useAppContext } from '../store';
@@ -102,13 +101,11 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 
-const defaultTheme = createTheme();
-
 export default function Layout({ children }) {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const { auth: { session }, signOut, showAlert } = useAppContext();
+    const { auth: { session }, signOut, } = useAppContext();
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -135,142 +132,140 @@ export default function Layout({ children }) {
     }
 
     return (
-        <ThemeProvider theme={defaultTheme}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', }}>
-                <CssBaseline />
-                <AppBar position="fixed" open={open}>
-                    <Toolbar>
-                        <IconButton
-                            color="inherit"
-                            aria-label="open drawer"
-                            onClick={handleDrawerOpen}
-                            edge="start"
-                            sx={{
-                                marginRight: 5,
-                                ...(open && { display: 'none' }),
-                            }}
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                            <NavLink to={"/"} style={{ textDecoration: 'none', color: '#fff' }}>
-                                JoyInScrum
-                            </NavLink>
-                        </Typography>
-                        {session && (
-                            <div>
-                                <IconButton
-                                    size="large"
-                                    aria-label="account of current user"
-                                    aria-controls="menu-appbar"
-                                    aria-haspopup="true"
-                                    onClick={handleMenu}
-                                    color="inherit"
-                                >
-                                    <AccountCircle />
-                                </IconButton>
-                                <Menu
-                                    id="menu-appbar"
-                                    anchorEl={anchorEl}
-                                    anchorOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    keepMounted
-                                    transformOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    open={Boolean(anchorEl)}
-                                    onClose={handleClose}
-                                >
-                                    <MenuItem onClick={handleClose}>
-                                        <NavLink to={"/profile"}><IconButton aria-label="my profile" sx={{ fontSize: 16 }}><PermIdentityIcon /> Profile</IconButton></NavLink>
-                                    </MenuItem>
-                                    <MenuItem onClick={handleClose}>
-                                        <NavLink to={"/settings"}><IconButton aria-label="settings" sx={{ fontSize: 16 }}><SettingsSuggestIcon /> Settings</IconButton></NavLink>
-                                    </MenuItem>
-                                    <Divider />
-                                    <MenuItem onClick={handleSignOut}>
-                                        <NavLink to={"/"}><IconButton aria-label="sign out" sx={{ fontSize: 16 }}><LockIcon /> Sign Out</IconButton></NavLink>
-                                    </MenuItem>
-                                </Menu>
-                            </div>
-                        )}
-                    </Toolbar>
-                </AppBar>
-                <Drawer variant="permanent" open={open}>
-                    <DrawerHeader>
-                        <IconButton onClick={handleDrawerClose}>
-                            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-                        </IconButton>
-                    </DrawerHeader>
-                    <Divider />
-                    <List>
-                        {[['Dashboard', "/", <DashboardIcon key={"dashboard"} />], ['Organizer', "/organize", <HandymanIcon key={"organize"} />], ['Join Scrum', "/joinscrum", <GroupsIcon key="joinscrum" />],].map(([text, path, icon]) => (
-                            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-                                <ListItemButton
+        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', }}>
+            <CssBaseline />
+            <AppBar position="fixed" open={open}>
+                <Toolbar>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        onClick={handleDrawerOpen}
+                        edge="start"
+                        sx={{
+                            marginRight: 5,
+                            ...(open && { display: 'none' }),
+                        }}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                        <NavLink to={"/"} style={{ textDecoration: 'none', color: '#fff' }}>
+                            JoyInScrum
+                        </NavLink>
+                    </Typography>
+                    {session && (
+                        <div>
+                            <IconButton
+                                size="large"
+                                aria-label="account of current user"
+                                aria-controls="menu-appbar"
+                                aria-haspopup="true"
+                                onClick={handleMenu}
+                                color="inherit"
+                            >
+                                <AccountCircle />
+                            </IconButton>
+                            <Menu
+                                id="menu-appbar"
+                                anchorEl={anchorEl}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={Boolean(anchorEl)}
+                                onClose={handleClose}
+                            >
+                                <MenuItem onClick={handleClose}>
+                                    <NavLink to={"/profile"}><IconButton aria-label="my profile" sx={{ fontSize: 16 }}><PermIdentityIcon /> Profile</IconButton></NavLink>
+                                </MenuItem>
+                                <MenuItem onClick={handleClose}>
+                                    <NavLink to={"/settings"}><IconButton aria-label="settings" sx={{ fontSize: 16 }}><SettingsSuggestIcon /> Settings</IconButton></NavLink>
+                                </MenuItem>
+                                <Divider />
+                                <MenuItem onClick={handleSignOut}>
+                                    <NavLink to={"/"}><IconButton aria-label="sign out" sx={{ fontSize: 16 }}><LockIcon /> Sign Out</IconButton></NavLink>
+                                </MenuItem>
+                            </Menu>
+                        </div>
+                    )}
+                </Toolbar>
+            </AppBar>
+            <Drawer variant="permanent" open={open}>
+                <DrawerHeader>
+                    <IconButton onClick={handleDrawerClose}>
+                        {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+                    </IconButton>
+                </DrawerHeader>
+                <Divider />
+                <List>
+                    {[['Dashboard', "/", <DashboardIcon key={"dashboard"} />], ['Organizer', "/organize", <HandymanIcon key={"organize"} />], ['Join Scrum', "/joinscrum", <GroupsIcon key="joinscrum" />],].map(([text, path, icon]) => (
+                        <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+                            <ListItemButton
+                                sx={{
+                                    minHeight: 48,
+                                    justifyContent: open ? 'initial' : 'center',
+                                    px: 2.5,
+                                }}
+                            >
+                                <ListItemIcon
                                     sx={{
-                                        minHeight: 48,
-                                        justifyContent: open ? 'initial' : 'center',
-                                        px: 2.5,
+                                        minWidth: 0,
+                                        mr: open ? 3 : 'auto',
+                                        justifyContent: 'center',
                                     }}
                                 >
-                                    <ListItemIcon
+                                    <IconButton aria-label={text}>
+                                        <NavLink to={path}>{icon}</NavLink>
+                                    </IconButton>
+                                </ListItemIcon>
+                                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                            </ListItemButton>
+                        </ListItem>
+                    ))}
+                </List>
+                {!session &&
+                    (<>
+                        <Divider />
+                        <List>
+                            {[['Sign In', "/signin", <LockOpenIcon key="signin" />], ['Sign Up', "/signup", <ManageAccountsIcon key={"signup"} />]].map(([text, path, icon]) => (
+                                <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+                                    <ListItemButton
                                         sx={{
-                                            minWidth: 0,
-                                            mr: open ? 3 : 'auto',
-                                            justifyContent: 'center',
+                                            minHeight: 48,
+                                            justifyContent: open ? 'initial' : 'center',
+                                            px: 2.5,
                                         }}
                                     >
-                                        <IconButton aria-label={text}>
-                                            <NavLink to={path}>{icon}</NavLink>
-                                        </IconButton>
-                                    </ListItemIcon>
-                                    <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-                                </ListItemButton>
-                            </ListItem>
-                        ))}
-                    </List>
-                    {!session &&
-                        (<>
-                            <Divider />
-                            <List>
-                                {[['Sign In', "/signin", <LockOpenIcon key="signin" />], ['Sign Up', "/signup", <ManageAccountsIcon key={"signup"} />]].map(([text, path, icon]) => (
-                                    <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-                                        <ListItemButton
+                                        <ListItemIcon
                                             sx={{
-                                                minHeight: 48,
-                                                justifyContent: open ? 'initial' : 'center',
-                                                px: 2.5,
+                                                minWidth: 0,
+                                                mr: open ? 3 : 'auto',
+                                                justifyContent: 'center',
                                             }}
                                         >
-                                            <ListItemIcon
-                                                sx={{
-                                                    minWidth: 0,
-                                                    mr: open ? 3 : 'auto',
-                                                    justifyContent: 'center',
-                                                }}
-                                            >
-                                                <IconButton aria-label={text}>
-                                                    <NavLink to={path}>{icon}</NavLink>
-                                                </IconButton>
-                                            </ListItemIcon>
-                                            <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-                                        </ListItemButton>
-                                    </ListItem>
-                                ))}
-                            </List>
-                        </>)}
-                </Drawer>
-                <Container component="div" sx={{ flexGrow: 1, p: 3 }}>
-                    <DrawerHeader />
-                    {children}
-                </Container>
+                                            <IconButton aria-label={text}>
+                                                <NavLink to={path}>{icon}</NavLink>
+                                            </IconButton>
+                                        </ListItemIcon>
+                                        <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                                    </ListItemButton>
+                                </ListItem>
+                            ))}
+                        </List>
+                    </>)}
+            </Drawer>
+            <Container component="div" sx={{ flexGrow: 1, p: 3 }}>
+                <DrawerHeader />
+                {children}
+            </Container>
 
-                <AppFooter />
-            </Box>
-        </ThemeProvider>
+            <AppFooter />
+        </Box>
     );
 }
 

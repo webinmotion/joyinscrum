@@ -28,7 +28,7 @@ export default function Dashboard() {
                 },
             }}
         >
-            <Paper elevation={0}>
+            <Paper sx={{p:3}} elevation={0}>
                 <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown >
             </Paper>
         </Box>

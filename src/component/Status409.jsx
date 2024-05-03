@@ -13,7 +13,7 @@ export default function Status409() {
         },
       }}
     >
-      <Paper elevation={0}>
+      <Paper sx={{p: 3}} elevation={0}>
         <h2>409: Conflict</h2>
         <p>Resource requested cannot be served based on the curent state</p>
       </Paper>
