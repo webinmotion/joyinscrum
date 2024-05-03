@@ -1,13 +1,13 @@
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import { useEffect, useState } from 'react';
-import Markdown  from 'react-markdown';
+import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm'
 import '../markdown/dashboard.scss'
 
 export default function Dashboard() {
 
-    const [content, setContent] = useState('')
+    const [content, setContent] = useState('');
 
     useEffect(() => {
         import('../markdown/Dashboard.md').then((res) => {

@@ -12,17 +12,13 @@ import IconButton from '@mui/material/IconButton';
 import ArrowCircleRight from '@mui/icons-material/ArrowCircleRight';
 import { Typography } from '@mui/material';
 import { useAppContext } from '../store';
-import { Navigate, useParams } from 'react-router-dom';
 
 const LINK_HREF_REGEX = /https?:\/\/(.+)/;
-const ROUTE_REGEX = /\/scrum?\/(.+)?\/player\/(.+)/;
 
 export default function JoinScrum() {
 
-    const params = useParams();
-    const [scrumUrl, setScrumUrl] = useState({ value: params?.scrumId || '', error: false, message: '' });
+    const [scrumUrl, setScrumUrl] = useState({ value: '', error: false, message: '' });
     const [userHandle, setUserHandle] = useState({ value: '', error: false, message: '' });
-    const [playingAs, setPlayingAs] = useState(null)
     const { showAlert } = useAppContext();
 
     function handleInvitation() {
@@ -43,14 +39,11 @@ export default function JoinScrum() {
             showAlert({ message: scrumUrl.message, severity: "error", autoClose: true })
         }
         else {
-            let pathInfo = scrumUrl.value.replace(location.origin, "");
-            setPlayingAs(`${pathInfo?.trim()}/player/${btoa(userHandle.value?.trim())}`);
+            location.href = `${scrumUrl.value?.trim()}/player/${btoa(userHandle.value?.trim())}`;
         }
     }
 
-    return ROUTE_REGEX.test(playingAs) ?
-        <Navigate to={playingAs} replace />
-        :
+    return (
         <Container component="main" maxWidth="md">
             <Box
                 component="form"
@@ -83,7 +76,6 @@ export default function JoinScrum() {
                             name={"userHandle"}
                             value={userHandle.value}
                             error={userHandle.error}
-                            helperText={userHandle.message}
                             onChange={e => setUserHandle(v => ({ ...v, value: e.target.value }))}
                             endAdornment={
                                 <InputAdornment position="end">
@@ -101,6 +93,7 @@ export default function JoinScrum() {
                 <Typography variant='h4' sx={{ mt: 4 }}>{scrumUrl.value}/player/{userHandle.value}</Typography>
             </Box>
         </Container>
+    )
 }
 
 JoinScrum.propTypes = {
