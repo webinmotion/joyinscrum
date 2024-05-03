@@ -12,8 +12,7 @@ import IconButton from '@mui/material/IconButton';
 import ArrowCircleRight from '@mui/icons-material/ArrowCircleRight';
 import { Typography } from '@mui/material';
 import { useAppContext } from '../store';
-
-const LINK_HREF_REGEX = /https?:\/\/(.+)/;
+import { validateLinkAddress } from '../service/validate';
 
 export default function JoinScrum() {
 
@@ -27,9 +26,11 @@ export default function JoinScrum() {
         setUserHandle(h => ({ ...h, error: false, message: '' }))
 
         //validate inputs
-        if (!LINK_HREF_REGEX.test(scrumUrl.value)) {
-            setScrumUrl(url => ({ ...url, error: true, message: 'url does not appear to be a valid a value' }))
-        }
+        validateLinkAddress(scrumUrl.value, (err) => {
+            if (err) {
+                setScrumUrl(url => ({ ...url, error: true, message: err }))
+            }
+        });
 
         //proceed after values have been validated
         if (scrumUrl.value?.length === 0 || userHandle.value?.length === 0) {

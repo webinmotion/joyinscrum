@@ -1,7 +1,7 @@
 const USERNAME_REGEX = /^[a-zA-Z][a-z-A-Z0-9-_]{3,23}$/;
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_ADDR_REGEX = /^\b[\w.-]+@[\w.-]+\.[a-zA-Z]{2,4}\b$/;
-const LINK_HREF_REGEX = /https?:\/\/(.+)\.(.+)/;
+const LINK_HREF_REGEX = /https?:\/\/(.+)/;
 
 export function validateUsername(username, onComplete) {
     if (!username) {
