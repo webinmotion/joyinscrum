@@ -1,8 +1,6 @@
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -11,9 +9,14 @@ import Container from '@mui/material/Container';
 import { supabase } from '../service/auth';
 import { useAppContext } from '../store';
 import { useLocation, useNavigate, NavLink } from 'react-router-dom';
+import { useState } from 'react';
 
 export default function SignIn() {
 
+    const [signInForm, setSignInForm] = useState({
+        email: { value: '', error: false, message: '' },
+        password: { value: '', error: false, message: '' }
+    });
     const { showAlert, setSession } = useAppContext();
     const navigate = useNavigate();
     const location = useLocation();
@@ -22,21 +25,38 @@ export default function SignIn() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const form = new FormData(event.currentTarget);
-        const { data, error } = await supabase.auth.signInWithPassword({
-            email: form.get('email'),
-            password: form.get('password'),
-        });
+        const inputs = new FormData(event.currentTarget);
+        const formData = {
+            email: inputs.get('email'),
+            password: inputs.get('password'),
+        };
 
-        if (error) {
-            console.log(error);
-            showAlert({ message: error.message, severity: "error" })
+        const { email, password } = formData;
+
+        //validate inputs 
+        setSignInForm(form => ({
+            ...form,
+            email: { ...form.email, value: email, error: !email, message: !email ? 'email is a required field' : '' },
+            password: { ...form.password, value: password, error: !password, message: !password ? 'password is a required field' : '' }
+        }));
+
+        //proceed if inputs are present
+        if (email?.length == 0 || password?.length == 0) {
+            showAlert({ message: 'Email and password should both have a value', severity: 'error', autoClose: true })
         }
-        else {
-            const { user, session } = data;
-            console.log(user, session);
-            setSession(session);
-            navigate(from, { replace: true });
+        else if (!signInForm.email.error && !signInForm.password.error) {
+            const { data, error } = await supabase.auth.signInWithPassword(formData);
+
+            if (error) {
+                console.log(error);
+                showAlert({ message: error.message, severity: "error" })
+            }
+            else {
+                const { user, session } = data;
+                console.log(user, session);
+                setSession(session);
+                navigate(from, { replace: true });
+            }
         }
     };
 
@@ -66,6 +86,8 @@ export default function SignIn() {
                         name="email"
                         autoComplete="email"
                         autoFocus
+                        error={signInForm.email.error}
+                        helperText={signInForm.email.message}
                     />
                     <TextField
                         margin="normal"
@@ -76,10 +98,8 @@ export default function SignIn() {
                         type="password"
                         id="password"
                         autoComplete="current-password"
-                    />
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
+                        error={signInForm.password.error}
+                        helperText={signInForm.password.message}
                     />
                     <Button
                         type="submit"

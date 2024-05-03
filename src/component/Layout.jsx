@@ -108,7 +108,7 @@ export default function Layout({ children }) {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const { auth: { session }, signOut } = useAppContext();
+    const { auth: { session }, signOut, showAlert } = useAppContext();
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -126,9 +126,12 @@ export default function Layout({ children }) {
         setAnchorEl(null);
     };
 
-    const handleSignOut = () => {
-        supabase.auth.signOut()
-        signOut()
+    const handleSignOut = async () => {
+        let { error } = await supabase.auth.signOut();
+        if (error) {
+            console.log("logout issues", error.message);
+        }
+        signOut();
     }
 
     return (

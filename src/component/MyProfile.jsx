@@ -19,7 +19,7 @@ import { supabase } from '../service/auth';
 
 export default function MyProfile() {
 
-    const { auth: { session }, showAlert } = useAppContext();
+    const { auth: { session }, showAlert, signOut } = useAppContext();
     const [first, setFirst] = useState('');
     const [last, setLast] = useState('');
     const [phone, setPhone] = useState('');
@@ -36,7 +36,7 @@ export default function MyProfile() {
                 showAlert({ message: error.message, severity: 'error' })
             }
             else {
-                if (scrum_admin) {
+                if (scrum_admin && scrum_admin.length > 0) {
                     const [{ phone_num, first_name, last_name, country }] = scrum_admin; //consider the first item in list
                     setFirst(first_name);
                     setLast(last_name);
@@ -62,10 +62,54 @@ export default function MyProfile() {
         }
     }
 
+    async function handleDelete() {
+        //delete matching row in tbl_scrum_admin if one exists
+        const { error } = await supabase
+            .from('tbl_scrum_admin')
+            .delete()
+            .eq('email_address', session?.user.email);
+
+        if (error) {
+            showAlert({ message: error.message, severity: 'error' })
+        }
+
+        //delete entry from auth table
+        const apiUrl = import.meta.env.VITE_BACKEND_API_BASE_URL;
+        const jwtToken = session?.access_token;
+        try {
+            //delete the user
+            const response = await fetch(`${apiUrl}/delete-user`, {
+                method: 'POST',
+                headers: {
+                    apiKey: import.meta.env.VITE_ANNON_KEY,
+                    Authorization: `Bearer ${jwtToken}`
+                },
+            }).then(res => res.json());
+
+            console.log("deleting account =>", response.data);
+            showAlert({ message: "account deleted successfully", severity: 'success', autoClose: true });
+
+        } catch (error) {
+            console.log("deleted user error", error.message)
+        }
+        finally {
+            //now kill the session
+            await handleSignOut()
+        }
+    }
+
     function handleReset() {
         setPhone('');
         setFirst('');
         setLast('')
+    }
+
+    const handleSignOut = async () => {
+        let { error } = await supabase.auth.signOut();
+        if (error) {
+            console.log("logout issues", error.message);
+        }
+        signOut();
     }
 
     return (
@@ -133,6 +177,7 @@ export default function MyProfile() {
                                     id="email-addr"
                                     label="Email"
                                     defaultValue={session?.user.email}
+                                    disabled={true}
                                     InputProps={{
                                         startAdornment: <InputAdornment position="start"><EmailIcon /></InputAdornment>,
                                     }}
@@ -142,10 +187,13 @@ export default function MyProfile() {
                         </Box>
                     </CardContent>
                     <Divider />
-                    <CardActions sx={{ display: 'flex', flexFlow: 'row-reverse' }}>
+                    <CardActions sx={{ flex: 1, justifyContent: 'space-between' }}>
+                        <Stack>
+                            <Button variant="outlined" color="error" onClick={handleDelete}>Delete Account</Button>
+                        </Stack>
                         <Stack spacing={2} direction="row">
                             <Button variant="text" onClick={handleReset}>Cancel</Button>
-                            <Button variant="contained" onClick={handleUpsert}>Save</Button>
+                            <Button variant="contained" onClick={handleUpsert}>Update</Button>
                         </Stack>
                     </CardActions>
                 </Card>

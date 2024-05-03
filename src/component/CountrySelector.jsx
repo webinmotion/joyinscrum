@@ -33,7 +33,7 @@ export default function CountrySelector({value, setValue}) {
           label="Choose a country"
           inputProps={{
             ...params.inputProps,
-            autoComplete: false, // disable autocomplete and autofill
+            autoComplete: 'off', // disable autocomplete and autofill
           }}
         />
       )}

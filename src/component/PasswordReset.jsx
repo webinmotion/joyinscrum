@@ -9,9 +9,15 @@ import { supabase } from '../service/auth';
 import { useAppContext } from '../store';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { validatePassword } from '../service/validate';
+import { useState } from 'react';
 
 export default function PasswordReset() {
 
+    const [resetForm, setResetForm] = useState({
+        password: { value: '', error: false, message: '' },
+        cpassword: { value: '', error: false, message: '' }
+    });
     const { showAlert, setSession } = useAppContext();
     const navigate = useNavigate();
 
@@ -43,10 +49,53 @@ export default function PasswordReset() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const form = new FormData(event.currentTarget);
-        const password = form.get('password');
-        const cpassword = form.get('cpassword');
-        if (password === cpassword) {
+        const inputs = new FormData(event.currentTarget);
+        const formData = {
+            password: inputs.get('password'),
+            cpassword: inputs.get('cpassword'),
+        };
+
+        const { password, cpassword } = formData;
+
+        //validate inputs
+        validatePassword(password, (err) => {
+            if (err) {
+                setResetForm(form => ({
+                    ...form,
+                    password: { ...form.password, value: password, error: true, message: err }
+                }));
+            } else {
+                //all clear
+                setResetForm(form => ({
+                    ...form,
+                    password: { ...form.password, value: password, error: false, message: '' }
+                }));
+            }
+        });
+
+        validatePassword(cpassword, (err) => {
+            if (err) {
+                setResetForm(form => ({
+                    ...form,
+                    cpassword: { ...form.cpassword, value: cpassword, error: true, message: err }
+                }));
+            } else {
+                //all clear
+                setResetForm(form => ({
+                    ...form,
+                    cpassword: { ...form.cpassword, value: cpassword, error: false, message: '' }
+                }));
+            }
+        });
+
+        //proceed after values have been validated
+        if (cpassword?.length === 0 || password?.length === 0) {
+            showAlert({ message: 'Both passwords should have a value', severity: 'error', autoClose: true })
+        }
+        else if (cpassword !== password) {
+            showAlert({ message: 'Passwords do not match. Please try again', severity: 'error', autoClose: true })
+        }
+        else if (!resetForm.password.error && !resetForm.cpassword.error) {
             const { data, error } = await supabase.auth.updateUser({
                 password
             })

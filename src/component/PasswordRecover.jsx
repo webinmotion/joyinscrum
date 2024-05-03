@@ -9,26 +9,59 @@ import Container from '@mui/material/Container';
 import { supabase } from '../service/auth';
 import { useAppContext } from '../store';
 import { NavLink } from 'react-router-dom';
+import { validateEmailAddress } from '../service/validate';
+import { useState } from 'react';
 
 export default function PasswordRecover() {
 
+    const [recoveryForm, setRecoveryForm] = useState({
+        email: { value: '', error: false, message: '' },
+        password: { value: '', error: false, message: '' }
+    });
     const { showAlert } = useAppContext();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const form = new FormData(event.currentTarget);
-        const email = form.get('email');
-        const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-            redirectTo: `${location.origin}/reset`,
+        const inputs = new FormData(event.currentTarget);
+        const formData = {
+            email: inputs.get('email'),
+        };
+
+        const { email } = formData;
+
+        //validate form input
+        validateEmailAddress(email, (err) => {
+            if (err) {
+                setRecoveryForm(form => ({
+                    ...form,
+                    email: { ...form.email, value: email, error: true, message: err }
+                }))
+            } else {
+                //all clear
+                setRecoveryForm(form => ({
+                    ...form,
+                    email: { ...form.email, value: email, error: false, message: '' }
+                }));
+            }
         });
 
-        if (error) {
-            console.log(error);
-            showAlert({ message: error.message, severity: "error" })
+        //if all is good, register the details
+        if (email?.length == 0) {
+            showAlert({ message: 'Email should have a value', severity: 'error', autoClose: true })
         }
-        else {
-            showAlert({ message: "If the email is valid, you will find in your inbox an email with additional password recovery steps", severity: "info", autoClose: true });
-            console.log(data)
+        else if (!recoveryForm.email.error) {
+            const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+                redirectTo: `${location.origin}/reset`,
+            });
+
+            if (error) {
+                console.log(error);
+                showAlert({ message: error.message, severity: "error" })
+            }
+            else {
+                showAlert({ message: "If the email is valid, you will find in your inbox an email with additional password recovery steps", severity: "info", autoClose: true });
+                console.log(data)
+            }
         }
     };
 
@@ -49,7 +82,7 @@ export default function PasswordRecover() {
                     Recover Password
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                    <Typography variant='div' component="h4" sx={{mt: 3, mb: 2}} >What email is associated with your account?</Typography>
+                    <Typography variant='div' component="h4" sx={{ mt: 3, mb: 2 }} >What email is associated with your account?</Typography>
                     <TextField
                         margin="normal"
                         required
@@ -59,6 +92,8 @@ export default function PasswordRecover() {
                         name="email"
                         autoComplete="email"
                         autoFocus
+                        error={recoveryForm.email.error}
+                        helperText={recoveryForm.email.message}
                     />
                     <Button
                         type="submit"
