@@ -13,12 +13,14 @@ import ArrowCircleRight from '@mui/icons-material/ArrowCircleRight';
 import { Typography } from '@mui/material';
 import { useAppContext } from '../store';
 import { validateLinkAddress } from '../service/validate';
+import { Navigate } from 'react-router-dom';
 
 export default function JoinScrum() {
 
     const [scrumUrl, setScrumUrl] = useState({ value: '', error: false, message: '' });
     const [userHandle, setUserHandle] = useState({ value: '', error: false, message: '' });
     const { showAlert } = useAppContext();
+    const [playUrl, setPlayUrl] = useState(null)
 
     function handleInvitation() {
         //reset values
@@ -40,11 +42,12 @@ export default function JoinScrum() {
             showAlert({ message: scrumUrl.message, severity: "error", autoClose: true })
         }
         else {
-            location.href = `${scrumUrl.value?.trim()}/player/${btoa(userHandle.value?.trim())}`;
+            const url = scrumUrl.value.replace(location.origin, "");
+            setPlayUrl(`${url}/player/${btoa(userHandle.value?.trim())}`)
         }
     }
 
-    return (
+    return playUrl ? <Navigate to={playUrl} replace /> : (
         <Container component="main" maxWidth="md">
             <Box
                 component="form"
