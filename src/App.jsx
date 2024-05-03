@@ -18,6 +18,7 @@ import MyProfile from './component/MyProfile';
 import MySettings from './component/MySettings';
 import PasswordRecover from './component/PasswordRecover';
 import PasswordReset from './component/PasswordReset';
+import FromMagicLink from './component/FromMagicLink';
 
 export default function App() {
 
@@ -75,6 +76,7 @@ export default function App() {
         <Route element={<GuestOnly />}>
           <Route path="/joinscrum" element={<JoinScrum />} />
         </Route>
+        <Route path="/scrum/:scrumId" element={<FromMagicLink />} />
         <Route path="/scrum/:scrumId/player/:playerId" element={<LiveScrum />} />
         <Route path="/conflict" element={<Status409 />} />
         <Route path="*" element={<Status404 />} />

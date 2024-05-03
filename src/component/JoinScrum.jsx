@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -11,16 +12,17 @@ import IconButton from '@mui/material/IconButton';
 import ArrowCircleRight from '@mui/icons-material/ArrowCircleRight';
 import { Typography } from '@mui/material';
 import { useAppContext } from '../store';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 
 const LINK_HREF_REGEX = /https?:\/\/(.+)/;
 const ROUTE_REGEX = /\/scrum?\/(.+)?\/player\/(.+)/;
 
 export default function JoinScrum() {
 
-    const [scrumUrl, setScrumUrl] = useState({ value: '', error: false, message: '' });
+    const params = useParams();
+    const [scrumUrl, setScrumUrl] = useState({ value: params?.scrumId || '', error: false, message: '' });
     const [userHandle, setUserHandle] = useState({ value: '', error: false, message: '' });
-    const [route, setRoute] = useState(null)
+    const [playingAs, setPlayingAs] = useState(null)
     const { showAlert } = useAppContext();
 
     function handleInvitation() {
@@ -42,12 +44,12 @@ export default function JoinScrum() {
         }
         else {
             let pathInfo = scrumUrl.value.replace(location.origin, "");
-            setRoute(`${pathInfo?.trim()}/player/${btoa(userHandle.value?.trim())}`);
+            setPlayingAs(`${pathInfo?.trim()}/player/${btoa(userHandle.value?.trim())}`);
         }
     }
 
-    return ROUTE_REGEX.test(route) ?
-        <Navigate to={route} replace />
+    return ROUTE_REGEX.test(playingAs) ?
+        <Navigate to={playingAs} replace />
         :
         <Container component="main" maxWidth="md">
             <Box
@@ -99,7 +101,8 @@ export default function JoinScrum() {
                 <Typography variant='h4' sx={{ mt: 4 }}>{scrumUrl.value}/player/{userHandle.value}</Typography>
             </Box>
         </Container>
+}
 
-
-
+JoinScrum.propTypes = {
+    scrumId: PropTypes.string,
 }
