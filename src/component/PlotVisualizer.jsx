@@ -29,7 +29,7 @@ export default function PlotVisualizer() {
 
             switch (payload.eventType) {
               case "UPDATE": {
-                setScrum(payload[0])
+                setScrum(payload["new"])
                 break;
               }
               default: {

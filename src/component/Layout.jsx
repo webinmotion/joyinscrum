@@ -33,6 +33,7 @@ import { NavLink } from 'react-router-dom';
 import { useAppContext } from '../store';
 import { supabase } from '../service/auth';
 import AppFooter from './AppFooter';
+import Avatar from '@mui/material/Avatar';
 
 const drawerWidth = 240;
 
@@ -148,6 +149,7 @@ export default function Layout({ children }) {
                     >
                         <MenuIcon />
                     </IconButton>
+                    <Avatar alt="joyinscrum" src="dark/android-chrome-192x192.png" sx={{mr: 2}} />
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         <NavLink to={"/"} style={{ textDecoration: 'none', color: '#fff' }}>
                             JoyInScrum
