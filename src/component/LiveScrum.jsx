@@ -31,12 +31,11 @@ export default function Joyinscrum() {
                 setPlayers(players)
             }
             else {
-
                 const { data: players2, error } = await supabase
                     .from('tbl_scrum_player')
-                    .insert([
+                    .upsert(
                         { player_handle: playerId, scrum_id: scrumId, player_joined: true, },
-                    ])
+                    )
                     .select()
 
                 if (error) {
