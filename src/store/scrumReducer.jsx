@@ -1,4 +1,4 @@
-import { ADD_PLAYER_ACTION, SET_PLAYERS_ACTION, SET_SCRUM_ACTION, UPDATE_PLAYER_ACTION, REMOVE_PLAYER_ACTION, } from "./scrumActions";
+import { ADD_PLAYER_ACTION, SET_PLAYERS_ACTION, SET_SCRUM_ACTION, UPDATE_PLAYER_ACTION, REMOVE_PLAYER_ACTION, CLEAR_ALL_VOTES_ACTION, } from "./scrumActions";
 
 export const initialScrum = null;
 
@@ -34,6 +34,9 @@ export const playersReducer = (players, action) => {
         }
         case REMOVE_PLAYER_ACTION: {
             return players.filter(pl => pl.email !== action.player.player_handle)
+        }
+        case CLEAR_ALL_VOTES_ACTION: {
+            return players.map(pl => ({...pl, choice: ''}))
         }
         default: {
             return players;

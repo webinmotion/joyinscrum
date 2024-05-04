@@ -4,7 +4,7 @@ import { authReducer, initialAuth, } from './authReducer';
 import { scrumReducer, initialScrum, initialPlayers, playersReducer, } from './scrumReducer';
 import { clearAlertAction, showAlertAction, } from "./alertActions";
 import { signOutAction, setSessionAction, } from "./authActions";
-import { addPlayerAction, setPlayersAction, setScrumAction, updatePlayerAction, removePlayerAction, } from "./scrumActions";
+import { addPlayerAction, setPlayersAction, setScrumAction, updatePlayerAction, removePlayerAction, clearAllVotesAction, } from "./scrumActions";
 import PropTypes from 'prop-types';
 
 const AppContext = createContext(null)
@@ -43,6 +43,7 @@ export function AppContextProvider({ children }) {
         setScrum: setScrumAction(scrumDispatch),
         updatePlayer: updatePlayerAction(playersDispatch),
         removePlayer: removePlayerAction(playersDispatch),
+        clearAllVotes: clearAllVotesAction(playersDispatch),
     }}>
         {children}
     </AppContext.Provider>

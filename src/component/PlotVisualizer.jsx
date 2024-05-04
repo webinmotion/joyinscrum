@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import { useAppContext } from '../store';
+import { supabase } from '../service/auth';
 
 /**
  * y-axis - 0 - # of voters
@@ -14,8 +15,34 @@ import { useAppContext } from '../store';
  */
 export default function PlotVisualizer() {
 
-  const { scrum, players } = useAppContext()
+  const { scrum, players, setScrum, showAlert } = useAppContext()
   const canvasRef = useRef();
+
+  useEffect(() => {
+    (async function () {
+      const subscribe = supabase.channel('tbl-scrummage-chan')
+        .on(
+          'postgres_changes',
+          { event: '*', schema: 'public', table: 'tbl_scrummage' },
+          (payload) => {
+            console.log('Change received!', payload);
+
+            switch (payload.eventType) {
+              case "UPDATE": {
+                setScrum(payload[0])
+                break;
+              }
+              default: {
+                showAlert({ message: `ignoring ${payload.eventType} event in tbl_scrummage`, severity: 'info' })
+              }
+            }
+          }
+        )
+        .subscribe()
+
+      console.log(subscribe)
+    })()
+  }, [])
 
   useEffect(() => {
     // extract bar chart data
@@ -29,7 +56,10 @@ export default function PlotVisualizer() {
 
     // update each choice (map key) in the map with votes matching that choice
     const updated = players.reduce((acc, player) => {
-      const curr = parseInt(player.choice) || 0;
+      let curr = String(player.choice);
+      if (!choices.includes(curr)) {
+        curr = 'NV';
+      }
       acc[curr] = (acc[curr] || 0) + 1;
       return acc;
     }, polling);
@@ -40,24 +70,50 @@ export default function PlotVisualizer() {
     });
 
     // plotting the data
-    const chart = new Chart(canvasRef.current, {
-      type: 'bar',
+    const chart = new Chart(canvasRef.current.getContext('2d'), {
+      type: 'bar',  //bar, horizontalBar, pie, line, doughnut, radar, polarArea
       data: {
         labels: data.map(col => col.choice),
         datasets: [{
           label: 'Distribution of Voting',
           data: data.map(col => col.votes),
-          borderWidth: 1
+          backgroundColor: ['lightgreen', 'orange', 'yellow', 'lightblue', 'lightbrown', 'lightgray', 'violet'],
         }]
       },
       options: {
+        title: {
+          display: true,
+          text: 'Voting count grouped by number of votes per choice',
+          fontSize: 20,
+        },
+        legend: {
+          display: false,
+          position: 'right',  //top, bottom, left, right
+        },
+        layout: {
+          padding: {
+            left: 30,
+            right: 10,
+            bottom: 30,
+            top: 10,
+          }
+        },
         scales: {
+          display: true,
           y: {
             beginAtZero: true,
-            title: { text: '# of Votes' }
+            title: { 
+              display: true,
+              text: '# of Votes', 
+              color: 'red',
+            }
           },
           x: {
-            title: { text: 'Voting Choices' }
+            title: { 
+              display: true,
+              text: 'Voting Choices', 
+              color: 'red',
+            }
           }
         },
       }

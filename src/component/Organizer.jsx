@@ -77,7 +77,7 @@ export default function Organizer() {
 
     const [value, setValue] = React.useState(0);
     const [topic, setTopic] = React.useState('');
-    const { auth: { session }, scrum, players, showAlert, setScrum, addPlayer, updatePlayer, removePlayer, setPlayers } = useAppContext();
+    const { auth: { session }, scrum, players, showAlert, setScrum, addPlayer, updatePlayer, removePlayer, setPlayers, clearAllVotes } = useAppContext();
 
     React.useEffect(() => {
         (async function () {
@@ -159,7 +159,33 @@ export default function Organizer() {
                                 break;
                             }
                             default: {
-                                showAlert({ message: 'ignoring event', severity: 'info' })
+                                showAlert({ message: `ignoring ${payload.eventType} event in tbl_scrum_player`, severity: 'info' })
+                            }
+                        }
+                    }
+                )
+                .subscribe()
+
+            console.log(subscribe)
+        })()
+    }, [])
+
+    React.useEffect(() => {
+        (async function () {
+            const subscribe = supabase.channel('tbl-scrummage-chan')
+                .on(
+                    'postgres_changes',
+                    { event: '*', schema: 'public', table: 'tbl_scrummage' },
+                    (payload) => {
+                        console.log('Change received!', payload);
+
+                        switch (payload.eventType) {
+                            case "UPDATE": {
+                                clearAllVotes();
+                                break;
+                            }
+                            default: {
+                                showAlert({ message: `ignoring ${payload.eventType} event in tbl_scrummage`, severity: 'info' })
                             }
                         }
                     }
@@ -188,19 +214,24 @@ export default function Organizer() {
     };
 
     const updateScrumTopic = async () => {
-        const scrumId = scrum?.scrum_id;
-        const { data, error } = await supabase
-            .from('tbl_scrummage')
-            .update({ current_item: topic })
-            .eq('scrum_id', scrumId)
-            .select()
+        if (topic && topic.trim().length > 0) {
+            const scrumId = scrum?.scrum_id;
+            const { data, error } = await supabase
+                .from('tbl_scrummage')
+                .update({ current_item: topic })
+                .eq('scrum_id', scrumId)
+                .select()
 
-        if (error) {
-            showAlert({ message: error.message, severity: 'error' })
+            if (error) {
+                showAlert({ message: error.message, severity: 'error' })
+            }
+            else {
+                console.log(data)
+                setPlayers([...players.map(pl => ({ ...pl, choice: '' }))])
+            }
         }
         else {
-            console.log(data)
-            setPlayers([...players.map(pl => ({ ...pl, choice: '' }))])
+            showAlert({ message: 'You need to add the current topic before you can submit', severity: 'warning', autoClose: true })
         }
     }
 
@@ -240,6 +271,7 @@ export default function Organizer() {
                                 <IconButton
                                     aria-label="generate invitation link"
                                     onClick={updateScrumTopic}
+                                disabled={!topic}
                                 >
                                     <ArrowCircleRight fontSize='large' color='primary' sx={{ mb: 3 }} />
                                 </IconButton>

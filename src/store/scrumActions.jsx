@@ -3,6 +3,7 @@ export const SET_SCRUM_ACTION = "SET_SCRUM_ACTION";
 export const ADD_PLAYER_ACTION = "ADD_PLAYER_ACTION";
 export const UPDATE_PLAYER_ACTION = "UPDATE_PLAYER_ACTION";
 export const REMOVE_PLAYER_ACTION = "REMOVE_PLAYER_ACTION";
+export const CLEAR_ALL_VOTES_ACTION = "CLEAR_ALL_VOTES_ACTION";
 
 export const setPlayersAction = dispatch => (players) => {
     dispatch({
@@ -31,6 +32,12 @@ export const updatePlayerAction = dispatch => (player) => {
 export const removePlayerAction = dispatch => (player) => {
     dispatch({
         type: REMOVE_PLAYER_ACTION, player,
+    })
+}
+
+export const clearAllVotesAction = dispatch => () => {
+    dispatch({
+        type: CLEAR_ALL_VOTES_ACTION
     })
 }
 
