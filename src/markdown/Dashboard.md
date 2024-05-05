@@ -1,5 +1,7 @@
 # Get rolling...
 
+[Quick Introduction Video](https://1drv.ms/v/s!AnEcQtEi1SlIgYU8Ft7i23iDRYSCYA)
+
 __JoyInScrum__ (sounds like join scrum) is an app which complements the scrum's __estimation planning__ ceremony by providing a visual tool for coordinating voting in several ways:
 
 - participants can conveniently join using a sharable browser url (desktop/laptop) or a qr code (phone app)
