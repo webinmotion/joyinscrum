@@ -131,7 +131,7 @@ export default function Organizer() {
                 }
             }
         })();
-    }, [scrum]);
+    }, [scrum?.scrum_id]);
 
     React.useEffect(() => {
         (async function () {
@@ -227,7 +227,7 @@ export default function Organizer() {
             }
             else {
                 console.log(data)
-                setPlayers([...players.map(pl => ({ ...pl, choice: '' }))])
+                clearAllVotes();
             }
         }
         else {
