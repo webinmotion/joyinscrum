@@ -1,9 +1,10 @@
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import { useEffect, useState } from 'react';
+import { Typography } from '@mui/material';
 import Markdown from 'react-markdown';
-import remarkGfm from 'remark-gfm'
-import '../markdown/dashboard.scss'
+import remarkGfm from 'remark-gfm';
+import '../markdown/dashboard.scss';
 
 export default function Dashboard() {
 
@@ -28,7 +29,19 @@ export default function Dashboard() {
                 },
             }}
         >
-            <Paper sx={{p:3}} elevation={0}>
+            <Paper sx={{ p: 3 }} elevation={0}>
+                <Typography variant='h2' component={"h2"} sx={{mb: 2}} color={"secondary"}>Scrum like you mean it...</Typography>
+                <video
+                    autoPlay={false}
+                    loop={false}
+                    width="320" height="240" controls
+                    poster="./img/office-meeting.jpg"
+                >
+                    <source
+                        src='video/joy-in-scrum-how-to-intro.mp4'
+                        type="video/mp4"
+                    />
+                </video>
                 <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown >
             </Paper>
         </Box>
