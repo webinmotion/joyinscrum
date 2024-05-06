@@ -90,7 +90,7 @@ export default function SignUp() {
         email,
         password,
         options: {
-          emailRedirectTo: `${location.origin}/signin`,
+          emailRedirectTo: `${location.origin}`,
         },
       });
 
