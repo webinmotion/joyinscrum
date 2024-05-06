@@ -30,7 +30,7 @@ export default function Dashboard() {
             }}
         >
             <Paper sx={{ p: 3 }} elevation={0}>
-                <Typography variant='h2' component={"h2"} sx={{mb: 2}} color={"secondary"}>Scrum like you mean it...</Typography>
+                <Typography variant='h2' component={"h2"} sx={{ mb: 2 }} color={"secondary"}>Scrum like you mean it...</Typography>
                 <video
                     autoPlay={false}
                     loop={false}

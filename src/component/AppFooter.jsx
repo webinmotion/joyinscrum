@@ -35,12 +35,14 @@ export default function AppFooter() {
             }}
         >
             <Container maxWidth="sm">
-                <Box sx={{display: 'flex'}}>
+                <Box sx={{ display: 'flex' }}>
                     <Avatar alt="joyinscrum" src="favicon-32x32.png" sx={{ mr: 2 }} />
-                    <Typography variant="body1">
-                        Putting joy back in scrum
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        <Typography variant="body1">
+                            Putting joy back in scrum
+                        </Typography>
                         <Copyright />
-                    </Typography>
+                    </div>
                 </Box>
 
                 <Box sx={{ mt: 2, "& a": { mr: 5 } }}>

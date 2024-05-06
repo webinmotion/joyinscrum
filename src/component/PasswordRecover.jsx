@@ -16,7 +16,6 @@ export default function PasswordRecover() {
 
     const [recoveryForm, setRecoveryForm] = useState({
         email: { value: '', error: false, message: '' },
-        password: { value: '', error: false, message: '' }
     });
     const { showAlert } = useAppContext();
 

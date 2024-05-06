@@ -51,6 +51,5 @@ export function AppContextProvider({ children }) {
 }
 
 AppContextProvider.propTypes = {
-
     children: PropTypes.object.isRequired
 }
