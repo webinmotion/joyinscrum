@@ -6,10 +6,10 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { supabase } from '../service/auth';
-import { useAppContext } from '../store';
+import { supabase } from '../../service/auth';
+import { useAppContext } from '../../store';
 import { NavLink } from 'react-router-dom';
-import { validateEmailAddress, validatePassword } from '../service/validate';
+import { validateEmailAddress, validatePassword } from '../../service/validate';
 import { useState } from 'react';
 
 export default function SignUp() {

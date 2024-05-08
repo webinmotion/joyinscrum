@@ -4,8 +4,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
-import { useAppContext } from '../store';
-import { supabase } from '../service/auth';
+import { useAppContext } from '../../store';
+import { supabase } from '../../service/auth';
 import { useParams } from "react-router-dom";
 
 export default function Joyinscrum() {

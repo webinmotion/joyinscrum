@@ -2,22 +2,22 @@ import Container from '@mui/material/Container';
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { useEffect } from 'react';
 import { supabase } from './service/auth';
-import AlertMessage from './component/AlertMessage';
+import AlertMessage from './component/util/AlertMessage';
 import { useAppContext } from './store';
-import SignUp from './component/SignUp';
-import SignIn from './component/SignIn';
-import Dashboard from './component/Dashboard';
-import Protected from './component/Protected';
-import LiveScrum from './component/LiveScrum';
-import Organizer from './component/Organizer';
-import JoinScrum from './component/JoinScrum';
-import GuestOnly from './component/GuestOnly';
-import Status404 from './component/Status404';
-import Status409 from './component/Status409';
-import MyProfile from './component/MyProfile';
-import MySettings from './component/MySettings';
-import PasswordRecover from './component/PasswordRecover';
-import PasswordReset from './component/PasswordReset';
+import SignUp from './component/auth/SignUp';
+import SignIn from './component/auth/SignIn';
+import Dashboard from './component/routes/Dashboard';
+import Protected from './component/routes/Protected';
+import LiveScrum from './component/guest/LiveScrum';
+import Organizer from './component/organizer/Organizer';
+import JoinScrum from './component/guest/JoinScrum';
+import GuestOnly from './component/routes/GuestOnly';
+import Status404 from './component/routes/Status404';
+import Status409 from './component/routes/Status409';
+import MyProfile from './component/organizer/MyProfile';
+import MySettings from './component/organizer/MySettings';
+import PasswordRecover from './component/auth/PasswordRecover';
+import PasswordReset from './component/auth/PasswordReset';
 
 export default function App() {
 

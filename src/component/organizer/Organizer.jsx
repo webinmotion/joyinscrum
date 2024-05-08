@@ -14,14 +14,14 @@ import Tab from '@mui/material/Tab';
 import FilledInput from '@mui/material/FilledInput';
 import CancelIcon from '@mui/icons-material/Cancel';
 import ArrowCircleRight from '@mui/icons-material/ArrowCircleRight';
-import { useAppContext } from '../store';
-import { supabase } from '../service/auth';
+import { useAppContext } from '../../store';
+import { supabase } from '../../service/auth';
 import { Typography } from '@mui/material';
 import QRCode from 'react-qr-code';
 import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import PlotVisualizer from './PlotVisualizer';
-import ClipboardCopy from './ClipboardCopy';
+import PlotVisualizer from '../util/PlotVisualizer';
+import ClipboardCopy from '../util/ClipboardCopy';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",

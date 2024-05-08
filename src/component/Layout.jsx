@@ -32,7 +32,7 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { useAppContext } from '../store';
 import { supabase } from '../service/auth';
-import AppFooter from './AppFooter';
+import AppFooter from './util/AppFooter';
 import Avatar from '@mui/material/Avatar';
 
 const drawerWidth = 240;

@@ -10,12 +10,12 @@ import Divider from '@mui/material/Divider';
 import InputAdornment from '@mui/material/InputAdornment';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
-import CountrySelector from './CountrySelector';
+import CountrySelector from '../util/CountrySelector';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import { useAppContext } from '../store';
+import { useAppContext } from '../../store';
 import { useEffect, useState } from 'react';
-import { supabase } from '../service/auth';
+import { supabase } from '../../service/auth';
 
 export default function MyProfile() {
 

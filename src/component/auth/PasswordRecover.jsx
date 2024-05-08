@@ -6,10 +6,10 @@ import Box from '@mui/material/Box';
 import FindReplaceIcon from '@mui/icons-material/FindReplace';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { supabase } from '../service/auth';
-import { useAppContext } from '../store';
+import { supabase } from '../../service/auth';
+import { useAppContext } from '../../store';
 import { NavLink } from 'react-router-dom';
-import { validateEmailAddress } from '../service/validate';
+import { validateEmailAddress } from '../../service/validate';
 import { useState } from 'react';
 
 export default function PasswordRecover() {

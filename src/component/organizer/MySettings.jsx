@@ -9,9 +9,9 @@ import TextField from '@mui/material/TextField';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import { useAppContext } from '../store';
+import { useAppContext } from '../../store';
 import { useEffect, useState } from 'react';
-import { supabase } from '../service/auth';
+import { supabase } from '../../service/auth';
 
 export default function MySettings() {
 

@@ -2,8 +2,8 @@ import Chart from 'chart.js/auto';
 import { useEffect, useRef } from 'react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import { useAppContext } from '../store';
-import { supabase } from '../service/auth';
+import { useAppContext } from '../../store';
+import { supabase } from '../../service/auth';
 
 /**
  * y-axis - 0 - # of voters

@@ -11,8 +11,8 @@ import FormControl from '@mui/material/FormControl';
 import IconButton from '@mui/material/IconButton';
 import ArrowCircleRight from '@mui/icons-material/ArrowCircleRight';
 import { Typography } from '@mui/material';
-import { useAppContext } from '../store';
-import { validateLinkAddress } from '../service/validate';
+import { useAppContext } from '../../store';
+import { validateLinkAddress } from '../../service/validate';
 import { Navigate } from 'react-router-dom';
 
 export default function JoinScrum() {

@@ -4,14 +4,14 @@ import { useEffect, useState } from 'react';
 import { Typography } from '@mui/material';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import '../markdown/dashboard.scss';
+import '../../markdown/dashboard.scss';
 
 export default function Dashboard() {
 
     const [content, setContent] = useState('');
 
     useEffect(() => {
-        import('../markdown/Dashboard.md').then((res) => {
+        import('../../markdown/Dashboard.md').then((res) => {
             fetch(res.default)
                 .then(response => response.text())
                 .then(text => setContent(text))

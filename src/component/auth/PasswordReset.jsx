@@ -5,11 +5,11 @@ import TextField from '@mui/material/TextField';
 import LockResetIcon from '@mui/icons-material/LockReset';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { supabase } from '../service/auth';
-import { useAppContext } from '../store';
+import { supabase } from '../../service/auth';
+import { useAppContext } from '../../store';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { validatePassword } from '../service/validate';
+import { validatePassword } from '../../service/validate';
 import { useState } from 'react';
 
 export default function PasswordReset() {
